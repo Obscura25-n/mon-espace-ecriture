@@ -1,16 +1,433 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon espace d'écriture</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mon espace d'écriture</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Georgia, serif;
+    background: #0b0d0c;
+    color: #eeeeea;
+}
+
+/* ACCUEIL */
+
+.home {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.home-box {
+    max-width: 700px;
+}
+
+.moon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: normal;
+    margin: 0 0 15px;
+    color: #e8eee8;
+}
+
+.subtitle {
+    font-size: 19px;
+    color: #a9b5ac;
+    margin-bottom: 45px;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.menu button {
+    background: transparent;
+    border: 1px solid #2f684d;
+    color: #dce9df;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu button:hover {
+    background: #173d2b;
+    border-color: #4b956e;
+}
+
+/* ÉDITEUR */
+
+.editor {
+    display: none;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 70px;
+    background: #111512;
+    border-bottom: 1px solid #26362c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 22px;
+}
+
+.back {
+    background: transparent;
+    border: 1px solid #395c47;
+    color: #dce9df;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.editor-area {
+    padding: 35px 20px 70px;
+}
+
+.stats {
+    max-width: 850px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #aebbb1;
+    font-size: 14px;
+}
+
+.page {
+    width: min(800px, 100%);
+    min-height: 1050px;
+    margin: 0 auto 30px;
+    background: #f7f5ef;
+    color: #20221f;
+    padding: 85px 90px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+    border-radius: 2px;
+}
+
+.page-number {
+    text-align: center;
+    color: #777;
+    margin-bottom: 35px;
+    font-size: 13px;
+}
+
+.title-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+.writing-area {
+    min-height: 780px;
+    outline: none;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.writing-area:empty::before {
+    content: "Commence à écrire...";
+    color: #aaa;
+}
+
+.controls {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.controls button {
+    background: #173d2b;
+    border: 1px solid #4b956e;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+}
+
+.controls button:hover {
+    background: #24583d;
+}
+
+@media (max-width: 700px) {
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .page {
+        padding: 55px 35px;
+        min-height: 800px;
+    }
+
+    .writing-area {
+        min-height: 600px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <h1>🌙 Mon espace d'écriture</h1>
 
-    <p>Bienvenue dans mon petit univers d'écriture.</p>
+<!-- ACCUEIL -->
+
+<section class="home" id="home">
+
+    <div class="home-box">
+
+        <div class="moon">🌙</div>
+
+        <h1>Mon espace d'écriture</h1>
+
+        <div class="subtitle">
+            Un endroit pour écrire, imaginer et construire mes histoires.
+        </div>
+
+        <div class="menu">
+
+            <button onclick="openEditor()">
+                📖 Mon roman
+            </button>
+
+            <button>
+                👤 Personnages
+            </button>
+
+            <button>
+                🌍 Univers
+            </button>
+
+            <button>
+                🧩 Intrigue
+            </button>
+
+            <button>
+                💡 Idées
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ÉDITEUR -->
+
+<section class="editor" id="editor">
+
+    <div class="topbar">
+
+        <div class="logo">
+            🌙 Mon roman
+        </div>
+
+        <button class="back" onclick="goHome()">
+            ← Accueil
+        </button>
+
+    </div>
+
+
+    <div class="editor-area">
+
+        <div class="stats">
+
+            <span>
+                🔤 <strong id="characters">0</strong> caractères
+            </span>
+
+            <span>
+                📝 <strong id="words">0</strong> mots
+            </span>
+
+            <span>
+                📄 Page <strong id="currentPage">1</strong>
+            </span>
+
+            <span>
+                💾 Sauvegarde automatique
+            </span>
+
+        </div>
+
+
+        <div class="page">
+
+            <div class="page-number">
+                — Page 1 —
+            </div>
+
+            <input
+                class="title-input"
+                id="chapterTitle"
+                placeholder="Titre du chapitre..."
+            >
+
+            <div
+                class="writing-area"
+                id="writingArea"
+                contenteditable="true"
+            ></div>
+
+        </div>
+
+
+        <div class="controls">
+
+            <button onclick="newPage()">
+                + Nouvelle page
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+const writingArea = document.getElementById("writingArea");
+const chapterTitle = document.getElementById("chapterTitle");
+
+function openEditor() {
+
+    document.getElementById("home").style.display = "none";
+    document.getElementById("editor").style.display = "block";
+
+    loadText();
+    updateStats();
+}
+
+
+function goHome() {
+
+    document.getElementById("editor").style.display = "none";
+    document.getElementById("home").style.display = "flex";
+
+    saveText();
+}
+
+
+function updateStats() {
+
+    const text = writingArea.innerText;
+
+    const characters = text.length;
+
+    const words = text.trim() === ""
+        ? 0
+        : text.trim().split(/\s+/).length;
+
+    document.getElementById("characters").textContent = characters;
+    document.getElementById("words").textContent = words;
+}
+
+
+function saveText() {
+
+    localStorage.setItem(
+        "roman-text",
+        writingArea.innerHTML
+    );
+
+    localStorage.setItem(
+        "roman-title",
+        chapterTitle.value
+    );
+}
+
+
+function loadText() {
+
+    const savedText = localStorage.getItem("roman-text");
+    const savedTitle = localStorage.getItem("roman-title");
+
+    if (savedText) {
+        writingArea.innerHTML = savedText;
+    }
+
+    if (savedTitle) {
+        chapterTitle.value = savedTitle;
+    }
+}
+
+
+function newPage() {
+
+    saveText();
+
+    alert(
+        "La gestion complète des pages arrive bientôt !"
+    );
+}
+
+
+writingArea.addEventListener(
+    "input",
+    function() {
+
+        updateStats();
+        saveText();
+
+    }
+);
+
+
+chapterTitle.addEventListener(
+    "input",
+    saveText
+);
+
+</script>
 
 </body>
 </html>
