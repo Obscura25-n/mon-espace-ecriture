@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mon espace d'écriture</title>
 
 <style>
+
+/* =========================
+   BASE
+========================= */
 
 * {
     box-sizing: border-box;
@@ -16,11 +21,23 @@ body {
     margin: 0;
     min-height: 100vh;
     font-family: Georgia, serif;
-    background: #0b0d0c;
-    color: #eeeeea;
+    background: #0a0d0b;
+    color: #e8eee9;
 }
 
-/* ACCUEIL */
+button {
+    font-family: Georgia, serif;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   ACCUEIL
+========================= */
 
 .home {
     min-height: 100vh;
@@ -28,181 +45,433 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 30px;
+    padding: 40px 20px;
 }
 
 .home-box {
-    max-width: 700px;
+    width: min(900px, 100%);
 }
 
 .moon {
-    font-size: 60px;
-    margin-bottom: 15px;
+    font-size: 64px;
+    margin-bottom: 12px;
 }
 
-h1 {
-    font-size: 48px;
+.home h1 {
+    font-size: clamp(38px, 6vw, 62px);
     font-weight: normal;
-    margin: 0 0 15px;
-    color: #e8eee8;
+    margin: 0;
 }
 
 .subtitle {
+    margin-top: 15px;
+    color: #aebbb1;
     font-size: 19px;
-    color: #a9b5ac;
-    margin-bottom: 45px;
 }
 
-.menu {
+.home-menu {
+    margin-top: 50px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 15px;
 }
 
-.menu button {
+.main-button {
     background: transparent;
-    border: 1px solid #2f684d;
-    color: #dce9df;
-    padding: 15px 25px;
+    color: #dfe9e2;
+    border: 1px solid #316c50;
     border-radius: 8px;
-    font-family: Georgia, serif;
+    padding: 15px 24px;
     font-size: 16px;
-    cursor: pointer;
     transition: 0.2s;
 }
 
-.menu button:hover {
-    background: #173d2b;
-    border-color: #4b956e;
+.main-button:hover {
+    background: #153c29;
+    border-color: #58a77b;
+    transform: translateY(-2px);
 }
 
-/* ÉDITEUR */
 
-.editor {
-    display: none;
+/* =========================
+   PAGES INTERNES
+========================= */
+
+.app {
     min-height: 100vh;
 }
 
 .topbar {
     height: 70px;
-    background: #111512;
-    border-bottom: 1px solid #26362c;
+    background: #101511;
+    border-bottom: 1px solid #26382c;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
 }
 
 .logo {
-    font-size: 22px;
+    font-size: 21px;
 }
 
-.back {
+.back-button {
     background: transparent;
-    border: 1px solid #395c47;
-    color: #dce9df;
-    padding: 9px 16px;
+    color: #dce8df;
+    border: 1px solid #365c46;
     border-radius: 6px;
-    cursor: pointer;
+    padding: 9px 16px;
 }
 
-.editor-area {
-    padding: 35px 20px 70px;
+.back-button:hover {
+    background: #173523;
 }
+
+.content {
+    width: min(1050px, 100%);
+    margin: auto;
+    padding: 45px 25px 80px;
+}
+
+.page-title {
+    font-size: 38px;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.page-description {
+    color: #aebbb1;
+}
+
+
+/* =========================
+   CHAPITRES
+========================= */
+
+.chapter-list {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.chapter-card {
+    background: #111713;
+    border: 1px solid #263a2d;
+    border-radius: 9px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.chapter-card:hover {
+    border-color: #3e7657;
+}
+
+.chapter-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.chapter-number {
+    color: #679d7c;
+    font-size: 14px;
+}
+
+.chapter-name {
+    font-size: 19px;
+}
+
+.small-button {
+    background: transparent;
+    border: 1px solid #355c46;
+    color: #dbe7df;
+    padding: 8px 13px;
+    border-radius: 6px;
+}
+
+.small-button:hover {
+    background: #173c29;
+}
+
+.add-button {
+    margin-top: 25px;
+    background: #173d2b;
+    color: white;
+    border: 1px solid #4c956d;
+    border-radius: 7px;
+    padding: 13px 20px;
+    font-size: 16px;
+}
+
+
+/* =========================
+   MODALE
+========================= */
+
+.modal-background {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal {
+    background: #121713;
+    border: 1px solid #355b45;
+    border-radius: 10px;
+    width: min(500px, 100%);
+    padding: 30px;
+}
+
+.modal h2 {
+    margin-top: 0;
+    font-weight: normal;
+}
+
+.modal input {
+    width: 100%;
+    padding: 13px;
+    background: #0b0f0c;
+    color: white;
+    border: 1px solid #385a46;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 16px;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+
+/* =========================
+   EDITEUR
+========================= */
+
+.editor-page {
+    padding-bottom: 80px;
+}
+
+.editor-header {
+    width: min(900px, 100%);
+    margin: auto;
+}
+
+.chapter-title-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #e9eee9;
+    font-family: Georgia, serif;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.chapter-title-input::placeholder {
+    color: #667169;
+}
+
+.editor-subtitle {
+    color: #839188;
+    margin-bottom: 25px;
+}
+
+
+/* STATS */
 
 .stats {
-    max-width: 850px;
-    margin: 0 auto 20px;
+    width: min(900px, 100%);
+    margin: 0 auto 18px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
-    color: #aebbb1;
+}
+
+.stat {
+    background: #111713;
+    border: 1px solid #26382d;
+    border-radius: 7px;
+    padding: 9px 13px;
+    color: #abb8ae;
     font-size: 14px;
 }
 
-.page {
+.stat strong {
+    color: #e4eee7;
+}
+
+
+/* FEUILLE */
+
+.paper {
     width: min(800px, 100%);
     min-height: 1050px;
-    margin: 0 auto 30px;
     background: #f7f5ef;
-    color: #20221f;
-    padding: 85px 90px;
-    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
-    border-radius: 2px;
+    color: #242622;
+    margin: 0 auto;
+    padding: 70px 85px;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.4);
 }
 
-.page-number {
+.paper-number {
     text-align: center;
     color: #777;
-    margin-bottom: 35px;
     font-size: 13px;
+    margin-bottom: 30px;
 }
 
-.title-input {
+.page-editor {
     width: 100%;
+    min-height: 820px;
+    resize: none;
     border: none;
     outline: none;
     background: transparent;
-    font-family: Georgia, serif;
-    font-size: 30px;
-    margin-bottom: 30px;
-    color: #222;
-}
-
-.writing-area {
-    min-height: 780px;
-    outline: none;
+    color: #242622;
     font-family: Georgia, serif;
     font-size: 18px;
-    line-height: 1.8;
-    white-space: pre-wrap;
+    line-height: 1.85;
 }
 
-.writing-area:empty::before {
-    content: "Commence à écrire...";
-    color: #aaa;
-}
 
-.controls {
-    max-width: 800px;
-    margin: 0 auto;
+/* NAVIGATION */
+
+.page-navigation {
+    width: min(800px, 100%);
+    margin: 22px auto 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     gap: 15px;
 }
 
-.controls button {
+.nav-button {
     background: #173d2b;
-    border: 1px solid #4b956e;
+    border: 1px solid #4b956d;
     color: white;
-    padding: 12px 22px;
+    padding: 11px 19px;
     border-radius: 7px;
-    cursor: pointer;
+}
+
+.nav-button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.page-indicator {
+    color: #aebbb1;
+}
+
+
+/* =========================
+   SEANCES
+========================= */
+
+.session-container {
+    width: min(750px, 100%);
+    margin: 40px auto;
+    text-align: center;
+}
+
+.timer {
+    font-size: clamp(60px, 12vw, 110px);
+    color: #dfeae2;
+    margin: 40px 0;
+}
+
+.session-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.session-option {
+    background: transparent;
+    color: #dce8df;
+    border: 1px solid #386248;
+    border-radius: 7px;
+    padding: 10px 16px;
+}
+
+.session-option:hover {
+    background: #173d2b;
+}
+
+.session-goal {
+    margin-top: 35px;
+}
+
+.session-goal input {
+    width: 150px;
+    padding: 10px;
+    background: #111713;
+    border: 1px solid #365a45;
+    border-radius: 6px;
+    color: white;
+    text-align: center;
     font-family: Georgia, serif;
 }
 
-.controls button:hover {
-    background: #24583d;
+.session-start {
+    margin-top: 25px;
+    background: #173d2b;
+    border: 1px solid #4b956d;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 7px;
+    font-size: 17px;
 }
+
+.session-result {
+    margin-top: 30px;
+    color: #aebbb1;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 700px) {
 
-    h1 {
-        font-size: 36px;
+    .topbar {
+        padding: 0 15px;
     }
 
-    .page {
-        padding: 55px 35px;
+    .content {
+        padding: 30px 15px;
+    }
+
+    .paper {
+        padding: 50px 35px;
         min-height: 800px;
     }
 
-    .writing-area {
+    .page-editor {
         min-height: 600px;
+    }
+
+    .chapter-title-input {
+        font-size: 29px;
     }
 
 }
@@ -214,9 +483,11 @@ h1 {
 <body>
 
 
-<!-- ACCUEIL -->
+<!-- =========================
+     ACCUEIL
+========================= -->
 
-<section class="home" id="home">
+<section id="home" class="home">
 
     <div class="home-box">
 
@@ -224,30 +495,34 @@ h1 {
 
         <h1>Mon espace d'écriture</h1>
 
-        <div class="subtitle">
+        <p class="subtitle">
             Un endroit pour écrire, imaginer et construire mes histoires.
-        </div>
+        </p>
 
-        <div class="menu">
+        <div class="home-menu">
 
-            <button onclick="openEditor()">
+            <button class="main-button" onclick="showChapters()">
                 📖 Mon roman
             </button>
 
-            <button>
+            <button class="main-button">
                 👤 Personnages
             </button>
 
-            <button>
+            <button class="main-button">
                 🌍 Univers
             </button>
 
-            <button>
+            <button class="main-button">
                 🧩 Intrigue
             </button>
 
-            <button>
+            <button class="main-button">
                 💡 Idées
+            </button>
+
+            <button class="main-button" onclick="showSessions()">
+                ⏱️ Séances d'écriture
             </button>
 
         </div>
@@ -258,174 +533,960 @@ h1 {
 
 
 
-<!-- ÉDITEUR -->
+<!-- =========================
+     CHAPITRES
+========================= -->
 
-<section class="editor" id="editor">
+<section id="chapters" class="app hidden">
 
     <div class="topbar">
 
         <div class="logo">
-            🌙 Mon roman
+            🌙 Mon espace d'écriture
         </div>
 
-        <button class="back" onclick="goHome()">
+        <button class="back-button" onclick="goHome()">
             ← Accueil
         </button>
 
     </div>
 
+    <main class="content">
 
-    <div class="editor-area">
+        <h1 class="page-title">
+            📖 Mon roman
+        </h1>
+
+        <p class="page-description">
+            Tes chapitres, tes pages, ton histoire.
+        </p>
+
+        <div id="chapterList" class="chapter-list"></div>
+
+        <button class="add-button" onclick="openChapterModal()">
+            + Nouveau chapitre
+        </button>
+
+    </main>
+
+</section>
+
+
+
+<!-- =========================
+     EDITEUR
+========================= -->
+
+<section id="editor" class="app hidden editor-page">
+
+    <div class="topbar">
+
+        <div class="logo">
+            📖 <span id="editorChapterName">Chapitre</span>
+        </div>
+
+        <button class="back-button" onclick="showChapters()">
+            ← Chapitres
+        </button>
+
+    </div>
+
+    <main class="content">
+
+        <div class="editor-header">
+
+            <input
+                id="chapterTitle"
+                class="chapter-title-input"
+                placeholder="Titre du chapitre..."
+                oninput="saveCurrentPage()"
+            >
+
+            <div class="editor-subtitle">
+                Ton histoire commence ici.
+            </div>
+
+        </div>
+
 
         <div class="stats">
 
-            <span>
-                🔤 <strong id="characters">0</strong> caractères
-            </span>
-
-            <span>
-                📝 <strong id="words">0</strong> mots
-            </span>
-
-            <span>
-                📄 Page <strong id="currentPage">1</strong>
-            </span>
-
-            <span>
-                💾 Sauvegarde automatique
-            </span>
-
-        </div>
-
-
-        <div class="page">
-
-            <div class="page-number">
-                — Page 1 —
+            <div class="stat">
+                🔤 <strong id="characterCount">0</strong> caractères
             </div>
 
-            <input
-                class="title-input"
-                id="chapterTitle"
-                placeholder="Titre du chapitre..."
-            >
+            <div class="stat">
+                📝 <strong id="wordCount">0</strong> mots
+            </div>
 
-            <div
-                class="writing-area"
-                id="writingArea"
-                contenteditable="true"
-            ></div>
+            <div class="stat">
+                📄 Page <strong id="pageNumber">1</strong>
+            </div>
+
+            <div class="stat">
+                📚 <strong id="chapterWordCount">0</strong> mots dans le chapitre
+            </div>
 
         </div>
 
 
-        <div class="controls">
+        <div class="paper">
 
-            <button onclick="newPage()">
+            <div class="paper-number">
+                — Page <span id="paperPageNumber">1</span> —
+            </div>
+
+            <textarea
+                id="pageEditor"
+                class="page-editor"
+                placeholder="Commence à écrire..."
+                oninput="saveCurrentPage()"
+            ></textarea>
+
+        </div>
+
+
+        <div class="page-navigation">
+
+            <button
+                id="previousButton"
+                class="nav-button"
+                onclick="previousPage()"
+            >
+                ← Page précédente
+            </button>
+
+            <div class="page-indicator">
+                <span id="pageIndicator">1 / 1</span>
+            </div>
+
+            <button
+                class="nav-button"
+                onclick="nextPage()"
+            >
+                Page suivante →
+            </button>
+
+        </div>
+
+
+        <div style="text-align:center; margin-top:20px;">
+
+            <button
+                class="small-button"
+                onclick="addPage()"
+            >
                 + Nouvelle page
+            </button>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+
+<!-- =========================
+     SEANCES
+========================= -->
+
+<section id="sessions" class="app hidden">
+
+    <div class="topbar">
+
+        <div class="logo">
+            ⏱️ Séances d'écriture
+        </div>
+
+        <button class="back-button" onclick="goHome()">
+            ← Accueil
+        </button>
+
+    </div>
+
+    <main class="content">
+
+        <div class="session-container">
+
+            <h1 class="page-title">
+                ⏱️ Une séance d'écriture
+            </h1>
+
+            <p class="page-description">
+                Choisis ton temps, fixe éventuellement un objectif,
+                puis écris.
+            </p>
+
+
+            <div class="timer" id="timer">
+                25:00
+            </div>
+
+
+            <div class="session-options">
+
+                <button class="session-option" onclick="setTimer(10)">
+                    10 min
+                </button>
+
+                <button class="session-option" onclick="setTimer(15)">
+                    15 min
+                </button>
+
+                <button class="session-option" onclick="setTimer(25)">
+                    25 min
+                </button>
+
+                <button class="session-option" onclick="setTimer(45)">
+                    45 min
+                </button>
+
+                <button class="session-option" onclick="setTimer(60)">
+                    60 min
+                </button>
+
+            </div>
+
+
+            <div class="session-goal">
+
+                <p>
+                    🎯 Objectif de mots
+                </p>
+
+                <input
+                    id="wordGoal"
+                    type="number"
+                    placeholder="Ex : 500"
+                    min="0"
+                >
+
+            </div>
+
+
+            <button
+                class="session-start"
+                id="sessionStartButton"
+                onclick="startSession()"
+            >
+                ▶ Commencer la séance
+            </button>
+
+
+            <div class="session-result" id="sessionResult"></div>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+
+<!-- =========================
+     MODALE CHAPITRE
+========================= -->
+
+<div id="chapterModal" class="modal-background hidden">
+
+    <div class="modal">
+
+        <h2>📖 Nouveau chapitre</h2>
+
+        <p>
+            Comment veux-tu appeler ce chapitre ?
+        </p>
+
+        <input
+            id="newChapterName"
+            placeholder="Ex : Le commencement"
+        >
+
+        <div class="modal-actions">
+
+            <button
+                class="small-button"
+                onclick="closeChapterModal()"
+            >
+                Annuler
+            </button>
+
+            <button
+                class="add-button"
+                onclick="createChapter()"
+                style="margin-top:0;"
+            >
+                Créer
             </button>
 
         </div>
 
     </div>
 
-</section>
+</div>
 
 
 
 <script>
 
-const writingArea = document.getElementById("writingArea");
-const chapterTitle = document.getElementById("chapterTitle");
+/* =========================
+   DONNEES
+========================= */
 
-function openEditor() {
+let chapters = JSON.parse(
+    localStorage.getItem("writingChapters")
+) || [];
 
-    document.getElementById("home").style.display = "none";
-    document.getElementById("editor").style.display = "block";
+let currentChapterIndex = 0;
+let currentPageIndex = 0;
 
-    loadText();
-    updateStats();
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function hideAll() {
+
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("chapters").classList.add("hidden");
+    document.getElementById("editor").classList.add("hidden");
+    document.getElementById("sessions").classList.add("hidden");
+
 }
 
 
 function goHome() {
 
-    document.getElementById("editor").style.display = "none";
-    document.getElementById("home").style.display = "flex";
+    saveCurrentPage();
 
-    saveText();
+    hideAll();
+
+    document.getElementById("home").classList.remove("hidden");
+
+}
+
+
+function showChapters() {
+
+    saveCurrentPage();
+
+    hideAll();
+
+    document.getElementById("chapters").classList.remove("hidden");
+
+    renderChapters();
+
+}
+
+
+/* =========================
+   CHAPITRES
+========================= */
+
+function renderChapters() {
+
+    const list = document.getElementById("chapterList");
+
+    list.innerHTML = "";
+
+    if (chapters.length === 0) {
+
+        list.innerHTML = `
+            <div class="chapter-card">
+                <div>
+                    <div class="chapter-name">
+                        Aucun chapitre pour l'instant.
+                    </div>
+                    <div class="page-description">
+                        Crée ton premier chapitre pour commencer.
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    chapters.forEach((chapter, index) => {
+
+        let totalWords = 0;
+
+        chapter.pages.forEach(page => {
+
+            totalWords += countWords(page);
+
+        });
+
+
+        const card = document.createElement("div");
+
+        card.className = "chapter-card";
+
+        card.innerHTML = `
+
+            <div class="chapter-info">
+
+                <div class="chapter-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <div>
+
+                    <div class="chapter-name">
+                        ${escapeHTML(chapter.title)}
+                    </div>
+
+                    <div class="page-description">
+                        ${chapter.pages.length} page(s)
+                        · ${totalWords} mots
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <button
+                    class="small-button"
+                    onclick="openChapter(${index})"
+                >
+                    Ouvrir →
+                </button>
+
+            </div>
+
+        `;
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+function openChapterModal() {
+
+    document
+        .getElementById("chapterModal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("newChapterName")
+        .focus();
+
+}
+
+
+function closeChapterModal() {
+
+    document
+        .getElementById("chapterModal")
+        .classList.add("hidden");
+
+}
+
+
+function createChapter() {
+
+    const input =
+        document.getElementById("newChapterName");
+
+    const title =
+        input.value.trim() || "Nouveau chapitre";
+
+
+    chapters.push({
+
+        title: title,
+
+        pages: [""]
+
+    });
+
+
+    saveChapters();
+
+    input.value = "";
+
+    closeChapterModal();
+
+    renderChapters();
+
+}
+
+
+function openChapter(index) {
+
+    saveCurrentPage();
+
+    currentChapterIndex = index;
+    currentPageIndex = 0;
+
+    hideAll();
+
+    document
+        .getElementById("editor")
+        .classList.remove("hidden");
+
+    loadChapter();
+
+}
+
+
+function saveChapters() {
+
+    localStorage.setItem(
+        "writingChapters",
+        JSON.stringify(chapters)
+    );
+
+}
+
+
+/* =========================
+   EDITEUR
+========================= */
+
+function loadChapter() {
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+    if (!chapter) return;
+
+
+    document.getElementById(
+        "editorChapterName"
+    ).textContent = chapter.title;
+
+
+    document.getElementById(
+        "chapterTitle"
+    ).value = chapter.title;
+
+
+    loadCurrentPage();
+
+}
+
+
+function loadCurrentPage() {
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+    if (!chapter) return;
+
+
+    const text =
+        chapter.pages[currentPageIndex] || "";
+
+
+    document.getElementById(
+        "pageEditor"
+    ).value = text;
+
+
+    updateStats();
+
+    updatePageNavigation();
+
+}
+
+
+function saveCurrentPage() {
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+    if (!chapter) return;
+
+
+    const title =
+        document.getElementById("chapterTitle").value;
+
+
+    chapter.title =
+        title.trim() || "Sans titre";
+
+
+    chapter.pages[currentPageIndex] =
+        document.getElementById("pageEditor").value;
+
+
+    saveChapters();
+
+    updateStats();
+
 }
 
 
 function updateStats() {
 
-    const text = writingArea.innerText;
+    const editor =
+        document.getElementById("pageEditor");
 
-    const characters = text.length;
-
-    const words = text.trim() === ""
-        ? 0
-        : text.trim().split(/\s+/).length;
-
-    document.getElementById("characters").textContent = characters;
-    document.getElementById("words").textContent = words;
-}
+    if (!editor) return;
 
 
-function saveText() {
-
-    localStorage.setItem(
-        "roman-text",
-        writingArea.innerHTML
-    );
-
-    localStorage.setItem(
-        "roman-title",
-        chapterTitle.value
-    );
-}
+    const text = editor.value;
 
 
-function loadText() {
-
-    const savedText = localStorage.getItem("roman-text");
-    const savedTitle = localStorage.getItem("roman-title");
-
-    if (savedText) {
-        writingArea.innerHTML = savedText;
-    }
-
-    if (savedTitle) {
-        chapterTitle.value = savedTitle;
-    }
-}
+    const characters =
+        text.length;
 
 
-function newPage() {
-
-    saveText();
-
-    alert(
-        "La gestion complète des pages arrive bientôt !"
-    );
-}
+    const words =
+        countWords(text);
 
 
-writingArea.addEventListener(
-    "input",
-    function() {
+    document.getElementById(
+        "characterCount"
+    ).textContent = characters;
 
-        updateStats();
-        saveText();
+
+    document.getElementById(
+        "wordCount"
+    ).textContent = words;
+
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+
+    let chapterWords = 0;
+
+
+    if (chapter) {
+
+        chapter.pages.forEach(page => {
+
+            chapterWords += countWords(page);
+
+        });
 
     }
-);
 
 
-chapterTitle.addEventListener(
-    "input",
-    saveText
-);
+    document.getElementById(
+        "chapterWordCount"
+    ).textContent = chapterWords;
+
+}
+
+
+function countWords(text) {
+
+    if (!text || !text.trim()) {
+
+        return 0;
+
+    }
+
+
+    return text
+        .trim()
+        .split(/\s+/)
+        .length;
+
+}
+
+
+/* =========================
+   PAGES
+========================= */
+
+function updatePageNavigation() {
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+    if (!chapter) return;
+
+
+    const total =
+        chapter.pages.length;
+
+
+    document.getElementById(
+        "pageNumber"
+    ).textContent =
+        currentPageIndex + 1;
+
+
+    document.getElementById(
+        "paperPageNumber"
+    ).textContent =
+        currentPageIndex + 1;
+
+
+    document.getElementById(
+        "pageIndicator"
+    ).textContent =
+        `${currentPageIndex + 1} / ${total}`;
+
+
+    document.getElementById(
+        "previousButton"
+    ).disabled =
+        currentPageIndex === 0;
+
+}
+
+
+function previousPage() {
+
+    saveCurrentPage();
+
+    if (currentPageIndex === 0) return;
+
+    currentPageIndex--;
+
+    loadCurrentPage();
+
+}
+
+
+function nextPage() {
+
+    saveCurrentPage();
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+    if (!chapter) return;
+
+
+    if (
+        currentPageIndex <
+        chapter.pages.length - 1
+    ) {
+
+        currentPageIndex++;
+
+    } else {
+
+        chapter.pages.push("");
+
+        currentPageIndex++;
+
+        saveChapters();
+
+    }
+
+
+    loadCurrentPage();
+
+}
+
+
+function addPage() {
+
+    saveCurrentPage();
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+
+    chapter.pages.splice(
+        currentPageIndex + 1,
+        0,
+        ""
+    );
+
+
+    currentPageIndex++;
+
+    saveChapters();
+
+    loadCurrentPage();
+
+}
+
+
+/* =========================
+   SEANCES
+========================= */
+
+let sessionSeconds = 25 * 60;
+let sessionInterval = null;
+let sessionRunning = false;
+let sessionStartWords = 0;
+
+
+function showSessions() {
+
+    saveCurrentPage();
+
+    hideAll();
+
+    document
+        .getElementById("sessions")
+        .classList.remove("hidden");
+
+}
+
+
+function setTimer(minutes) {
+
+    if (sessionRunning) return;
+
+    sessionSeconds =
+        minutes * 60;
+
+    updateTimer();
+
+}
+
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(sessionSeconds / 60);
+
+    const seconds =
+        sessionSeconds % 60;
+
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+}
+
+
+function startSession() {
+
+    if (sessionRunning) {
+
+        stopSession();
+
+        return;
+
+    }
+
+
+    sessionRunning = true;
+
+    sessionStartWords =
+        getTotalWords();
+
+
+    document.getElementById(
+        "sessionStartButton"
+    ).textContent =
+        "⏸ Terminer la séance";
+
+
+    document.getElementById(
+        "sessionResult"
+    ).textContent =
+        "Écris. Le reste peut attendre. 🌙";
+
+
+    sessionInterval =
+        setInterval(() => {
+
+            sessionSeconds--;
+
+            updateTimer();
+
+
+            if (sessionSeconds <= 0) {
+
+                stopSession();
+
+                document.getElementById(
+                    "sessionResult"
+                ).innerHTML =
+                    "✨ Séance terminée !";
+
+            }
+
+        }, 1000);
+
+}
+
+
+function stopSession() {
+
+    clearInterval(sessionInterval);
+
+    sessionRunning = false;
+
+    const wordsWritten =
+        Math.max(
+            0,
+            getTotalWords() - sessionStartWords
+        );
+
+
+    document.getElementById(
+        "sessionStartButton"
+    ).textContent =
+        "▶ Commencer une nouvelle séance";
+
+
+    document.getElementById(
+        "sessionResult"
+    ).innerHTML =
+        `✨ Séance terminée !<br>
+         📝 ${wordsWritten} mots écrits pendant cette séance.`;
+
+
+    sessionSeconds = 25 * 60;
+
+    updateTimer();
+
+}
+
+
+function getTotalWords() {
+
+    let total = 0;
+
+
+    chapters.forEach(chapter => {
+
+        chapter.pages.forEach(page => {
+
+            total += countWords(page);
+
+        });
+
+    });
+
+
+    return total;
+
+}
+
+
+/* =========================
+   SECURITE HTML
+========================= */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   DEMARRAGE
+========================= */
+
+updateTimer();
 
 </script>
 
