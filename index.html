@@ -1,1 +1,424 @@
-file:///home/chronos/u-277abd2bbd0006e431c34e45bd2d4e3982de5f60/MyFiles/Downloads/index_emerald_library_v4.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerald Library</title>
+<style>
+:root{
+  --black:#080b0a; --panel:#101614; --panel2:#151d1a;
+  --emerald:#0f6b4f; --emerald2:#16835f; --green:#53c79a;
+  --cream:#eee9dc; --muted:#9daaa4; --gold:#b9a46a; --red:#a94b4b;
+  --line:#26332e; --shadow:0 14px 35px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top right,#12352a 0,#080b0a 35%,#060807 100%);color:var(--cream);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.hidden{display:none!important}
+.topbar{height:70px;border-bottom:1px solid var(--line);background:rgba(8,11,10,.94);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:10}
+.logo{font-size:19px;color:var(--green);letter-spacing:.5px}
+.back-button,.ghost{background:transparent;border:1px solid var(--line);color:var(--cream);padding:9px 14px;border-radius:9px}
+.back-button:hover,.ghost:hover{border-color:var(--green);color:var(--green)}
+.content{max-width:1150px;margin:auto;padding:42px 5% 70px}
+.hero{text-align:center;padding:50px 20px 30px}
+.moon{font-size:42px;margin-bottom:10px}
+.hero h1{font-size:clamp(42px,7vw,76px);margin:0;color:var(--cream);letter-spacing:-2px}
+.hero h1 span{color:var(--green)}
+.hero p{color:var(--muted);font-size:17px}
+.book-row{display:flex;justify-content:center;gap:18px;margin:35px 0}
+.book{width:65px;height:92px;border-radius:3px 7px 7px 3px;box-shadow:var(--shadow);border-left:5px solid rgba(255,255,255,.08);position:relative}
+.book:after{content:"";position:absolute;inset:10px 9px;border:1px solid rgba(255,255,255,.18)}
+.book:nth-child(1){background:#0b4536;transform:rotate(-7deg)}
+.book:nth-child(2){background:#17221e;transform:rotate(2deg)}
+.book:nth-child(3){background:#174f3d;transform:rotate(7deg)}
+.nav-grid,.dashboard,.cards{display:grid;gap:16px}
+.nav-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));max-width:900px;margin:30px auto}
+.nav-card,.stat,.card,.chapter-card,.session-box,.editor-box{background:linear-gradient(145deg,rgba(21,29,26,.96),rgba(11,15,13,.96));border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow)}
+.nav-card{padding:22px;text-align:left;color:var(--cream);transition:.2s}
+.nav-card:hover{transform:translateY(-3px);border-color:var(--emerald2)}
+.nav-card strong{display:block;margin:9px 0 5px;font-size:18px}
+.nav-card small{color:var(--muted)}
+.dashboard{grid-template-columns:repeat(3,1fr);margin:35px auto;max-width:900px}
+.stat{padding:20px;text-align:center}
+.stat b{font-size:30px;color:var(--green);display:block}
+.stat span{color:var(--muted);font-size:13px}
+.page-title{text-align:center;font-size:38px;margin:15px 0 8px}
+.page-description{text-align:center;color:var(--muted);margin-bottom:30px}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 15px}
+.section-title h2{margin:0;font-size:22px}
+.add-button,.primary{background:var(--emerald);border:1px solid var(--emerald2);color:white;padding:11px 16px;border-radius:10px}
+.add-button:hover,.primary:hover{background:var(--emerald2)}
+.chapter-list,.cards{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.chapter-list{display:grid;gap:16px}
+.chapter-card{padding:20px;position:relative;cursor:pointer;min-height:150px}
+.chapter-card:hover{border-color:var(--emerald2)}
+.chapter-number{color:var(--gold);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+.chapter-card h3{margin:8px 0 10px;padding-right:35px}
+.chapter-meta{color:var(--muted);font-size:13px}
+.delete-btn{position:absolute;right:13px;top:13px;width:34px;height:34px;border-radius:8px;border:1px solid #4b2929;background:rgba(169,75,75,.12);color:#e09a9a}
+.delete-btn:hover{background:var(--red);color:white}
+.empty{text-align:center;color:var(--muted);border:1px dashed var(--line);padding:35px;border-radius:14px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
+.modal-box{width:min(520px,100%);background:#101614;border:1px solid var(--line);border-radius:16px;padding:25px;box-shadow:0 25px 70px #000}
+.modal-box h2{margin-top:0}
+label{display:block;color:var(--muted);font-size:13px;margin:14px 0 7px}
+input,textarea{width:100%;background:#0b0f0d;color:var(--cream);border:1px solid var(--line);border-radius:9px;padding:12px;outline:none}
+input:focus,textarea:focus{border-color:var(--green)}
+textarea{resize:vertical;min-height:130px;line-height:1.65}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.editor-layout{max-width:1000px;margin:auto}
+.editor-box{padding:20px}
+.editor-head{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;margin-bottom:14px}
+.editor-head input{font-size:19px;background:transparent;border:none;border-bottom:1px solid var(--line);border-radius:0}
+.counter{color:var(--muted);font-size:12px;text-align:center}
+.page-paper{background:#eee9dc;color:#171a18;border-radius:8px;min-height:560px;padding:40px;box-shadow:inset 0 0 30px rgba(0,0,0,.08)}
+.page-paper textarea{background:transparent;color:#171a18;border:none;min-height:480px;font-size:17px;line-height:1.8}
+.page-paper textarea:focus{border:none}
+.page-nav{display:flex;justify-content:space-between;gap:10px;margin-top:15px}
+.session-box{max-width:650px;margin:auto;padding:28px;text-align:center}
+.timer{font-size:64px;color:var(--green);letter-spacing:3px;margin:15px 0}
+.duration-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.duration-grid button{background:#0b0f0d;color:var(--cream);border:1px solid var(--line);padding:10px;border-radius:8px}
+.duration-grid button.active{border-color:var(--green);color:var(--green)}
+.goal{margin:20px 0}
+.cards{display:grid}
+.card{padding:20px;position:relative}
+.card h3{margin:0 35px 8px 0;color:var(--green)}
+.card p{white-space:pre-wrap;color:#c9d0cc;line-height:1.5}
+.card .delete-btn{top:15px}
+.timeline{border-left:1px solid var(--emerald);padding-left:20px}
+.timeline .card{margin-bottom:14px}
+.toast{position:fixed;right:20px;bottom:20px;background:#14231d;border:1px solid var(--emerald);padding:12px 16px;border-radius:10px;z-index:50}
+@media(max-width:700px){
+ .dashboard{grid-template-columns:1fr}
+ .editor-head{grid-template-columns:1fr 1fr}
+ .page-paper{padding:20px}
+ .duration-grid{grid-template-columns:repeat(3,1fr)}
+ .hero h1{font-size:46px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section id="home" class="app">
+  <div class="content">
+    <div class="hero">
+      <div class="moon">🌙</div>
+      <h1>Emerald <span>Library</span></h1>
+      <p>Ton espace d’écriture, tes idées, ton univers.</p>
+      <div class="book-row"><div class="book"></div><div class="book"></div><div class="book"></div></div>
+    </div>
+
+    <div class="nav-grid">
+      <button class="nav-card" onclick="showSection('chapters')">📖<strong>Mon roman</strong><small>Chapitres et pages</small></button>
+      <button class="nav-card" onclick="showSection('characters')">👤<strong>Personnages</strong><small>Fiches et secrets</small></button>
+      <button class="nav-card" onclick="showSection('world')">🌍<strong>Univers</strong><small>Lieux, règles, détails</small></button>
+      <button class="nav-card" onclick="showSection('plot')">🧩<strong>Intrigue</strong><small>Événements et timeline</small></button>
+      <button class="nav-card" onclick="showSection('ideas')">💡<strong>Idées</strong><small>Ne plus rien oublier</small></button>
+      <button class="nav-card" onclick="showSection('sessions')">⏱️<strong>Séances</strong><small>Écrire avec un objectif</small></button>
+    </div>
+
+    <div class="dashboard">
+      <div class="stat"><b id="statWords">0</b><span>mots</span></div>
+      <div class="stat"><b id="statPages">0</b><span>pages</span></div>
+      <div class="stat"><b id="statCharacters">0</b><span>personnages</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="chapters" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">📖 Mon roman</h1>
+    <p class="page-description">Tes chapitres, tes pages, ton histoire.</p>
+    <div id="chapterList" class="chapter-list"></div>
+    <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openChapterModal()">＋ Nouveau chapitre</button></div>
+  </main>
+</section>
+
+<section id="editor" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="closeEditor()">← Chapitres</button></div>
+  <main class="content editor-layout">
+    <h1 id="editorChapterName" class="page-title">Chapitre</h1>
+    <div class="editor-box">
+      <div class="editor-head">
+        <input id="chapterTitle" placeholder="Titre du chapitre" oninput="saveCurrentPage()">
+        <div class="counter"><b id="pageWords">0</b><br>mots</div>
+        <div class="counter"><b id="pageChars">0</b><br>caractères</div>
+        <div class="counter">Page <b id="pageNumber">1</b></div>
+      </div>
+      <div class="page-paper">
+        <textarea id="pageEditor" placeholder="Commence à écrire ici..." oninput="saveCurrentPage();updateEditorCounters()"></textarea>
+      </div>
+      <div class="page-nav">
+        <button class="ghost" onclick="changePage(-1)">← Page précédente</button>
+        <button class="primary" onclick="addPage()">＋ Nouvelle page</button>
+        <button class="ghost" onclick="changePage(1)">Page suivante →</button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<section id="characters" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">👤 Personnages</h1><p class="page-description">Construis ceux qui vivent dans ton histoire.</p>
+    <div id="characterList" class="cards"></div>
+    <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openModal('character')">＋ Nouveau personnage</button></div>
+  </main>
+</section>
+
+<section id="world" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">🌍 Univers</h1><p class="page-description">Lieux, magie, règles et détails de ton monde.</p>
+    <div id="worldList" class="cards"></div>
+    <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openModal('world')">＋ Ajouter à l’univers</button></div>
+  </main>
+</section>
+
+<section id="plot" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">🧩 Intrigue</h1><p class="page-description">Organise les événements importants de ton histoire.</p>
+    <div id="plotList" class="timeline"></div>
+    <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openModal('plot')">＋ Nouvel événement</button></div>
+  </main>
+</section>
+
+<section id="ideas" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">💡 Idées</h1><p class="page-description">Tes idées en vrac, prêtes à devenir des scènes.</p>
+    <div id="ideaList" class="cards"></div>
+    <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openModal('idea')">＋ Nouvelle idée</button></div>
+  </main>
+</section>
+
+<section id="sessions" class="app hidden">
+  <div class="topbar"><div class="logo">🌿 Emerald Library</div><button class="back-button" onclick="goHome()">← Accueil</button></div>
+  <main class="content">
+    <h1 class="page-title">⏱️ Séances d’écriture</h1><p class="page-description">Choisis une durée et écris sans regarder l’horloge.</p>
+    <div class="session-box">
+      <div class="duration-grid">
+        <button onclick="setDuration(10)">10 min</button><button onclick="setDuration(15)">15 min</button>
+        <button onclick="setDuration(25)" class="active">25 min</button><button onclick="setDuration(45)">45 min</button>
+        <button onclick="setDuration(60)">60 min</button>
+      </div>
+      <div class="timer" id="timer">25:00</div>
+      <div class="goal"><label>Objectif de mots (facultatif)</label><input id="wordGoal" type="number" min="0" placeholder="Ex : 500"></div>
+      <button id="timerButton" class="primary" onclick="toggleTimer()">▶ Commencer</button>
+      <p id="sessionResult" class="page-description"></p>
+    </div>
+  </main>
+</section>
+
+<div id="modal" class="modal hidden" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <h2 id="modalTitle">Ajouter</h2>
+    <div id="modalFields"></div>
+    <div class="modal-actions"><button class="ghost" onclick="closeModal()">Annuler</button><button class="primary" onclick="submitModal()">Enregistrer</button></div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+</div>
+
+<script>
+const KEYS={
+  chapters:"emeraldChapters", characters:"emeraldCharacters",
+  world:"emeraldWorld", ideas:"emeraldIdeas", plot:"emeraldPlot"
+};
+
+let chapters=load(KEYS.chapters,[]);
+let characters=load(KEYS.characters,[]);
+let world=load(KEYS.world,[]);
+let ideas=load(KEYS.ideas,[]);
+let plot=load(KEYS.plot,[]);
+let currentChapter=-1,currentPage=0;
+let modalType="";
+let duration=25*60,remaining=duration,timer=null,running=false,sessionStartWords=0;
+
+function load(key,fallback){
+  try{return JSON.parse(localStorage.getItem(key))??fallback}catch(e){return fallback}
+}
+function save(key,data){localStorage.setItem(key,JSON.stringify(data))}
+function esc(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function words(text=""){return text.trim()?text.trim().split(/\s+/).length:0}
+function totalWords(){return chapters.reduce((sum,c)=>sum+c.pages.reduce((a,p)=>a+words(p),0),0)}
+function toast(msg){
+  const t=document.getElementById("toast");t.textContent=msg;t.classList.remove("hidden");
+  clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.add("hidden"),2200)
+}
+function hideAll(){document.querySelectorAll(".app").forEach(x=>x.classList.add("hidden"))}
+function showSection(id){
+  if(id==="home"){goHome();return}
+  if(id!=="editor" && currentChapter>=0) saveCurrentPage();
+  hideAll();document.getElementById(id).classList.remove("hidden");
+  if(id==="chapters")renderChapters();
+  if(id==="characters")renderCharacters();
+  if(id==="world")renderWorld();
+  if(id==="ideas")renderIdeas();
+  if(id==="plot")renderPlot();
+  updateDashboard();
+}
+function goHome(){
+  if(currentChapter>=0)saveCurrentPage();
+  currentChapter=-1;currentPage=0;hideAll();document.getElementById("home").classList.remove("hidden");updateDashboard()
+}
+function updateDashboard(){
+  document.getElementById("statWords").textContent=totalWords().toLocaleString("fr-FR");
+  document.getElementById("statPages").textContent=chapters.reduce((a,c)=>a+c.pages.length,0);
+  document.getElementById("statCharacters").textContent=characters.length;
+}
+
+function renderChapters(){
+  const el=document.getElementById("chapterList");
+  if(!chapters.length){el.innerHTML='<div class="empty">Aucun chapitre pour le moment.<br><br>Commence ton histoire avec le bouton ci-dessous ✨</div>';return}
+  el.innerHTML=chapters.map((c,i)=>`
+    <article class="chapter-card" onclick="openChapter(${i})">
+      <button class="delete-btn" title="Supprimer le chapitre" onclick="event.stopPropagation();deleteChapter(${i})">🗑️</button>
+      <div class="chapter-number">Chapitre ${i+1}</div>
+      <h3>${esc(c.title||"Sans titre")}</h3>
+      <div class="chapter-meta">${c.pages.length} page${c.pages.length>1?"s":""} · ${c.pages.reduce((a,p)=>a+words(p),0).toLocaleString("fr-FR")} mots</div>
+    </article>`).join("")
+}
+function openChapterModal(){
+  document.getElementById("modalTitle").textContent="Nouveau chapitre";
+  document.getElementById("modalFields").innerHTML='<label>Titre du chapitre</label><input id="f1" placeholder="Ex : Le commencement">';
+  modalType="chapter";document.getElementById("modal").classList.remove("hidden");setTimeout(()=>document.getElementById("f1").focus(),50)
+}
+function deleteChapter(i){
+  const name=chapters[i]?.title||"ce chapitre";
+  if(!confirm(`Supprimer « ${name} » et toutes ses pages ?`))return;
+  chapters.splice(i,1);save(KEYS.chapters,chapters);renderChapters();updateDashboard();toast("Chapitre supprimé 🗑️")
+}
+function openChapter(i){
+  currentChapter=i;currentPage=0;hideAll();document.getElementById("editor").classList.remove("hidden");
+  loadEditor();updateEditorCounters()
+}
+function loadEditor(){
+  const c=chapters[currentChapter];if(!c)return;
+  document.getElementById("editorChapterName").textContent=c.title||"Sans titre";
+  document.getElementById("chapterTitle").value=c.title||"";
+  document.getElementById("pageEditor").value=c.pages[currentPage]||"";
+  document.getElementById("pageNumber").textContent=currentPage+1
+}
+function saveCurrentPage(){
+  if(currentChapter<0||!chapters[currentChapter])return;
+  const title=document.getElementById("chapterTitle")?.value;
+  const text=document.getElementById("pageEditor")?.value??"";
+  chapters[currentChapter].title=title||"Sans titre";
+  chapters[currentChapter].pages[currentPage]=text;
+  save(KEYS.chapters,chapters);
+  const name=document.getElementById("editorChapterName");if(name)name.textContent=chapters[currentChapter].title;
+  updateDashboard()
+}
+function updateEditorCounters(){
+  const text=document.getElementById("pageEditor").value;
+  document.getElementById("pageWords").textContent=words(text);
+  document.getElementById("pageChars").textContent=text.length
+}
+function changePage(dir){
+  saveCurrentPage();
+  const c=chapters[currentChapter];if(!c)return;
+  const next=currentPage+dir;
+  if(next<0||next>=c.pages.length){toast(dir>0?"C'est la dernière page.":"C'est la première page.");return}
+  currentPage=next;loadEditor();updateEditorCounters()
+}
+function addPage(){
+  saveCurrentPage();chapters[currentChapter].pages.push("");currentPage=chapters[currentChapter].pages.length-1;
+  save(KEYS.chapters,chapters);loadEditor();updateEditorCounters();toast("Nouvelle page créée ✨")
+}
+function closeEditor(){saveCurrentPage();currentChapter=-1;showSection("chapters")}
+
+function openModal(type){
+  modalType=type;
+  const data={
+    character:["Nouveau personnage",'<label>Nom</label><input id="f1" placeholder="Nom"><label>Âge</label><input id="f2" placeholder="Âge"><label>Personnalité</label><textarea id="f3" placeholder="Qualités, défauts, habitudes..."></textarea><label>Secret</label><textarea id="f4" placeholder="Un secret ?"></textarea>'],
+    world:["Nouvel élément de l’univers",'<label>Nom</label><input id="f1" placeholder="Ex : Royaume d’Elaris"><label>Description</label><textarea id="f2" placeholder="Décris cet élément..."></textarea>'],
+    idea:["Nouvelle idée",'<label>Titre</label><input id="f1" placeholder="Titre de l’idée"><label>Idée</label><textarea id="f2" placeholder="Note tout ce qui te passe par la tête..."></textarea>'],
+    plot:["Nouvel événement",'<label>Titre</label><input id="f1" placeholder="Ex : La révélation"><label>Description</label><textarea id="f2" placeholder="Que se passe-t-il ?"></textarea>']
+  }[type];
+  document.getElementById("modalTitle").textContent=data[0];
+  document.getElementById("modalFields").innerHTML=data[1];
+  document.getElementById("modal").classList.remove("hidden")
+}
+function closeModal(){document.getElementById("modal").classList.add("hidden");modalType=""}
+function submitModal(){
+  const f=id=>document.getElementById(id)?.value.trim()||"";
+  if(modalType==="chapter"){chapters.push({title:f("f1")||"Sans titre",pages:[""]});save(KEYS.chapters,chapters);closeModal();renderChapters();updateDashboard();toast("Chapitre créé 📖");return}
+  if(modalType==="character"){characters.push({name:f("f1")||"Sans nom",age:f("f2"),personality:f("f3"),secret:f("f4")});save(KEYS.characters,characters);closeModal();renderCharacters();updateDashboard();toast("Personnage ajouté 👤");return}
+  if(modalType==="world"){world.push({title:f("f1")||"Sans titre",description:f("f2")});save(KEYS.world,world);closeModal();renderWorld();toast("Élément ajouté 🌍");return}
+  if(modalType==="idea"){ideas.push({title:f("f1")||"Sans titre",text:f("f2")});save(KEYS.ideas,ideas);closeModal();renderIdeas();toast("Idée enregistrée 💡");return}
+  if(modalType==="plot"){plot.push({title:f("f1")||"Sans titre",description:f("f2")});save(KEYS.plot,plot);closeModal();renderPlot();toast("Événement ajouté 🧩");return}
+}
+function renderCharacters(){
+  const el=document.getElementById("characterList");
+  if(!characters.length){el.innerHTML='<div class="empty">Aucun personnage pour le moment.</div>';return}
+  el.innerHTML=characters.map((x,i)=>`<article class="card"><button class="delete-btn" onclick="deleteItem('characters',${i})">🗑️</button><h3>${esc(x.name)}</h3><p><b>Âge :</b> ${esc(x.age)||"—"}<br><br><b>Personnalité :</b><br>${esc(x.personality)||"—"}<br><br><b>Secret :</b><br>${esc(x.secret)||"—"}</p></article>`).join("")
+}
+function renderWorld(){
+  const el=document.getElementById("worldList");
+  if(!world.length){el.innerHTML='<div class="empty">Ton univers est encore vide 🌙</div>';return}
+  el.innerHTML=world.map((x,i)=>`<article class="card"><button class="delete-btn" onclick="deleteItem('world',${i})">🗑️</button><h3>${esc(x.title)}</h3><p>${esc(x.description)||"—"}</p></article>`).join("")
+}
+function renderIdeas(){
+  const el=document.getElementById("ideaList");
+  if(!ideas.length){el.innerHTML='<div class="empty">Aucune idée pour le moment 💭</div>';return}
+  el.innerHTML=ideas.map((x,i)=>`<article class="card"><button class="delete-btn" onclick="deleteItem('ideas',${i})">🗑️</button><h3>${esc(x.title)}</h3><p>${esc(x.text)||"—"}</p></article>`).join("")
+}
+function renderPlot(){
+  const el=document.getElementById("plotList");
+  if(!plot.length){el.innerHTML='<div class="empty">Ton intrigue n’a pas encore d’événements.</div>';return}
+  el.innerHTML=plot.map((x,i)=>`<article class="card"><button class="delete-btn" onclick="deleteItem('plot',${i})">🗑️</button><h3>${esc(x.title)}</h3><p>${esc(x.description)||"—"}</p></article>`).join("")
+}
+function deleteItem(type,i){
+  if(!confirm("Supprimer cet élément ?"))return;
+  const map={characters,world,ideas,plot};map[type].splice(i,1);save(KEYS[type],map[type]);
+  ({characters:renderCharacters,world:renderWorld,ideas:renderIdeas,plot:renderPlot}[type])();updateDashboard();toast("Supprimé 🗑️")
+}
+
+function setDuration(min){
+  if(running)return;
+  duration=min*60;remaining=duration;
+  document.querySelectorAll(".duration-grid button").forEach(b=>b.classList.remove("active"));
+  [...document.querySelectorAll(".duration-grid button")].find(b=>b.textContent===min+" min")?.classList.add("active");
+  updateTimer()
+}
+function updateTimer(){
+  const m=String(Math.floor(remaining/60)).padStart(2,"0"),s=String(remaining%60).padStart(2,"0");
+  document.getElementById("timer").textContent=`${m}:${s}`
+}
+function toggleTimer(){running?stopTimer():startTimer()}
+function startTimer(){
+  running=true;sessionStartWords=totalWords();
+  document.getElementById("timerButton").textContent="⏸ Arrêter";
+  document.getElementById("sessionResult").textContent="";
+  timer=setInterval(()=>{remaining--;updateTimer();if(remaining<=0)finishTimer()},1000)
+}
+function stopTimer(){
+  clearInterval(timer);timer=null;running=false;
+  const made=Math.max(0,totalWords()-sessionStartWords);
+  document.getElementById("timerButton").textContent="▶ Commencer";
+  document.getElementById("sessionResult").textContent=`Séance arrêtée · ${made} mot${made!==1?"s":""} écrit${made!==1?"s":""}.`;
+  remaining=duration;updateTimer()
+}
+function finishTimer(){
+  clearInterval(timer);timer=null;running=false;
+  const made=Math.max(0,totalWords()-sessionStartWords),goal=Number(document.getElementById("wordGoal").value)||0;
+  document.getElementById("timerButton").textContent="▶ Commencer";
+  document.getElementById("sessionResult").textContent=goal?`Temps terminé ! ${made} mots écrits · objectif ${goal}.`:`Temps terminé ! ${made} mots écrits.`;
+  remaining=duration;updateTimer();toast("Séance terminée ⏱️")
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&!document.getElementById("modal").classList.contains("hidden"))closeModal()
+});
+updateDashboard();updateTimer();
+</script>
+</body>
+</html>
