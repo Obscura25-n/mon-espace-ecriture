@@ -59,6 +59,23 @@ button{cursor:pointer}
 .chapter-meta{color:var(--muted);font-size:13px}
 .delete-btn{position:absolute;right:13px;top:13px;width:34px;height:34px;border-radius:8px;border:1px solid #4b2929;background:rgba(169,75,75,.12);color:#e09a9a}
 .delete-btn:hover{background:var(--red);color:white}
+  .edit-btn{
+  position:absolute;
+  right:55px;
+  top:13px;
+  width:34px;
+  height:34px;
+  border-radius:8px;
+  border:1px solid var(--emerald2);
+  background:transparent;
+  color:var(--emerald);
+  cursor:pointer;
+}
+
+.edit-btn:hover{
+  background:var(--emerald);
+  color:white;
+}
 .empty{text-align:center;color:var(--muted);border:1px dashed var(--line);padding:35px;border-radius:14px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
 .modal-box{width:min(520px,100%);background:#101614;border:1px solid var(--line);border-radius:16px;padding:25px;box-shadow:0 25px 70px #000}
@@ -280,6 +297,7 @@ function renderChapters(){
   if(!chapters.length){el.innerHTML='<div class="empty">Aucun chapitre pour le moment.<br><br>Commence ton histoire avec le bouton ci-dessous ✨</div>';return}
   el.innerHTML=chapters.map((c,i)=>`
     <article class="chapter-card" onclick="openChapter(${i})">
+      <button class="edit-btn" title="Modifier le chapitre" onclick="event.stopPropagation();editChapter(${i})">✏️</button>
       <button class="delete-btn" title="Supprimer le chapitre" onclick="event.stopPropagation();deleteChapter(${i})">🗑️</button>
       <div class="chapter-number">Chapitre ${i+1}</div>
       <h3>${esc(c.title||"Sans titre")}</h3>
@@ -296,7 +314,25 @@ function deleteChapter(i){
   if(!confirm(`Supprimer « ${name} » et toutes ses pages ?`))return;
   chapters.splice(i,1);save(KEYS.chapters,chapters);renderChapters();updateDashboard();toast("Chapitre supprimé 🗑️")
 }
-function openChapter(i){
+function editChapter(i){
+  const c = chapters[i];
+  if(!c) return;
+
+  currentChapter = i;
+  modalType = "editChapter";
+
+  document.getElementById("modalTitle").textContent = "Modifier le chapitre";
+  document.getElementById("modalFields").innerHTML = `
+    <label>Titre du chapitre</label>
+    <input id="f1" placeholder="Titre" value="${esc(c.title || "")}">
+
+    <label>Contenu du chapitre</label>
+    <textarea id="f2" rows="12" placeholder="Écris ton chapitre ici...">${esc(c.pages?.join("\n") || "")}</textarea>
+  `;
+
+  document.getElementById("modal").classList.remove("hidden");
+}
+  function openChapter(i){
   currentChapter=i;currentPage=0;hideAll();document.getElementById("editor").classList.remove("hidden");
   loadEditor();updateEditorCounters()
 }
@@ -350,6 +386,20 @@ function openModal(type){
 function closeModal(){document.getElementById("modal").classList.add("hidden");modalType=""}
 function submitModal(){
   const f=id=>document.getElementById(id)?.value.trim()||"";
+  if(modalType==="editChapter"){
+  const title=f("f1")||"Sans titre";
+  const content=document.getElementById("f2")?.value||"";
+
+  chapters[currentChapter].title=title;
+  chapters[currentChapter].pages=content.split("\n");
+
+  save(KEYS.chapters,chapters);
+  renderChapters();
+  updateDashboard();
+  closeModal();
+  toast("Chapitre modifié ✏️");
+  return;
+}
   if(modalType==="chapter"){chapters.push({title:f("f1")||"Sans titre",pages:[""]});save(KEYS.chapters,chapters);closeModal();renderChapters();updateDashboard();toast("Chapitre créé 📖");return}
   if(modalType==="character"){characters.push({name:f("f1")||"Sans nom",age:f("f2"),personality:f("f3"),secret:f("f4")});save(KEYS.characters,characters);closeModal();renderCharacters();updateDashboard();toast("Personnage ajouté 👤");return}
   if(modalType==="world"){world.push({title:f("f1")||"Sans titre",description:f("f2")});save(KEYS.world,world);closeModal();renderWorld();toast("Élément ajouté 🌍");return}
