@@ -297,7 +297,7 @@ function renderChapters(){
   if(!chapters.length){el.innerHTML='<div class="empty">Aucun chapitre pour le moment.<br><br>Commence ton histoire avec le bouton ci-dessous ✨</div>';return}
   el.innerHTML=chapters.map((c,i)=>`
     <article class="chapter-card" onclick="openChapter(${i})">
-      <button class="edit-btn" title="Modifier le chapitre" onclick="event.stopPropagation();editChapter(${i})">✏️</button>
+    <button class="edit-btn" title="Modifier le chapitre" onclick="event.stopPropagation();editChapter(${i})">✏️</button>
       <button class="delete-btn" title="Supprimer le chapitre" onclick="event.stopPropagation();deleteChapter(${i})">🗑️</button>
       <div class="chapter-number">Chapitre ${i+1}</div>
       <h3>${esc(c.title||"Sans titre")}</h3>
