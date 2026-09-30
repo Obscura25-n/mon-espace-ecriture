@@ -76,7 +76,41 @@ button{cursor:pointer}
   background:var(--emerald);
   color:white;
 }
-.empty{text-align:center;color:var(--muted);border:1px dashed var(--line);padding:35px;border-radius:14px}
+.search-box{
+  max-width:700px;
+  margin:24px auto;
+}
+
+.search-box input{
+  width:100%;
+  box-sizing:border-box;
+  padding:14px 18px;
+  background:#0b0f0d;
+  color:var(--cream);
+  border:1px solid var(--line);
+  border-radius:12px;
+  font-family:inherit;
+  font-size:15px;
+  outline:none;
+}
+
+.search-box input::placeholder{
+  color:var(--muted);
+}
+
+.search-box input:focus{
+  border-color:var(--emerald);
+  box-shadow:0 0 0 2px rgba(0,180,130,.12);
+}
+  .search-empty{
+  text-align:center;
+  color:var(--muted);
+  padding:35px 20px;
+  border:1px dashed var(--line);
+  border-radius:14px;
+  margin-top:16px;
+}
+  .empty{text-align:center;color:var(--muted);border:1px dashed var(--line);padding:35px;border-radius:14px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
 .modal-box{width:min(520px,100%);background:#101614;border:1px solid var(--line);border-radius:16px;padding:25px;box-shadow:0 25px 70px #000}
 .modal-box h2{margin-top:0}
@@ -151,6 +185,14 @@ textarea{resize:vertical;min-height:130px;line-height:1.65}
   <main class="content">
     <h1 class="page-title">📖 Mon roman</h1>
     <p class="page-description">Tes chapitres, tes pages, ton histoire.</p>
+    <div class="search-box">
+  <input
+    id="chapterSearch"
+    type="text"
+    placeholder="🔎 Rechercher dans mon roman..."
+    oninput="searchChapters()"
+  >
+</div>
     <div id="chapterList" class="chapter-list"></div>
     <div style="text-align:center;margin-top:22px"><button class="add-button" onclick="openChapterModal()">＋ Nouveau chapitre</button></div>
   </main>
@@ -304,7 +346,41 @@ function renderChapters(){
       <div class="chapter-meta">${c.pages.length} page${c.pages.length>1?"s":""} · ${c.pages.reduce((a,p)=>a+words(p),0).toLocaleString("fr-FR")} mots</div>
     </article>`).join("")
 }
-function openChapterModal(){
+function searchChapters(){
+  const input = document.getElementById("chapterSearch");
+  const query = (input?.value || "").trim().toLowerCase();
+
+  const list = document.getElementById("chapterList");
+  const oldMessage = list.querySelector(".search-empty");
+
+  if(oldMessage) oldMessage.remove();
+
+  const cards = list.querySelectorAll(".chapter-card");
+  let visible = 0;
+
+  cards.forEach((card, i) => {
+    const c = chapters[i];
+
+    const text = `
+      ${c?.title || ""}
+      ${(c?.pages || []).join(" ")}
+    `.toLowerCase();
+
+    const match = !query || text.includes(query);
+
+    card.style.display = match ? "" : "none";
+
+    if(match) visible++;
+  });
+
+  if(query && visible === 0){
+    const message = document.createElement("div");
+    message.className = "search-empty";
+    message.textContent = `🔎 Aucun chapitre ne correspond à « ${input.value} »`;
+    list.appendChild(message);
+  }
+}
+ function openChapterModal(){
   document.getElementById("modalTitle").textContent="Nouveau chapitre";
   document.getElementById("modalFields").innerHTML='<label>Titre du chapitre</label><input id="f1" placeholder="Ex : Le commencement">';
   modalType="chapter";document.getElementById("modal").classList.remove("hidden");setTimeout(()=>document.getElementById("f1").focus(),50)
